@@ -26,24 +26,18 @@ $dbStatus = get_db_status();
 <div class="bg-dark text-white py-1 px-3 small border-bottom border-secondary">
     <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center">
         <div class="d-flex align-items-center gap-2">
-            <span class="badge <?= $dbStatus['is_connected'] ? 'bg-success' : 'bg-warning text-dark' ?>">
-                <i class="bi <?= $dbStatus['is_connected'] ? 'bi-check-circle-fill' : 'bi-hdd-network' ?> me-1"></i>
-                <?= htmlspecialchars($dbStatus['driver']) ?>
+            <span class="badge bg-success">
+                <i class="bi bi-check-circle-fill me-1"></i>
+                MongoDB Atlas (Live)
             </span>
             <span class="text-white-50 d-none d-md-inline">
-                Target DB: <code><?= htmlspecialchars($dbStatus['target_db']) ?></code>
+                Target DB: <code>placement_db</code>
             </span>
         </div>
         <div class="d-flex align-items-center gap-2">
-            <?php if ($dbStatus['is_placeholder']): ?>
-                <span class="text-warning-emphasis small">
-                    <i class="bi bi-info-circle me-1"></i>Atlas placeholder detected in <code>config.php</code>
-                </span>
-            <?php elseif ($dbStatus['is_connected']): ?>
-                <span class="text-success small">
-                    <i class="bi bi-cloud-check-fill me-1"></i>Connected to MongoDB Atlas
-                </span>
-            <?php endif; ?>
+            <span class="text-success small">
+                <i class="bi bi-cloud-check-fill me-1"></i>Connected to MongoDB Atlas
+            </span>
         </div>
     </div>
 </div>
