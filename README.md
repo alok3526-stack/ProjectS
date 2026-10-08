@@ -87,13 +87,9 @@ The system is architected around four core collections:
 
 Open [`config.php`](file:///c:/Users/admin/Desktop/ProjectS/config.php) and replace the placeholder connection string with your MongoDB Atlas cluster URI:
 
-```php
-define('MONGODB_URI', 'mongodb+srv://<username>:<password>@cluster0.abcde.mongodb.net/placement_db?retryWrites=true&w=majority');
-define('MONGODB_DB_NAME', 'placement_db');
-```
 
-> **Note on Out-of-the-Box Demo Mode:**
-> If the placeholder (`<username>:<password>`) is present or Atlas is not yet configured, the system automatically runs with an intelligent Local NoSQL Engine (`/data/*.json`) providing the exact same MongoDB collection interface (`insertOne`, `find`, `findOne`, `updateOne`, `deleteOne`, `countDocuments`). As soon as you paste your Atlas credentials, the system seamlessly connects to your live MongoDB Atlas cluster!
+
+>
 
 ---
 
@@ -109,10 +105,3 @@ Then open your browser and visit: **`http://localhost:8000`**
 
 ---
 
-## 🔑 Pre-Seeded Demo Credentials
-
-| Role | Email | Password | What You Can Test |
-| :--- | :--- | :--- | :--- |
-| **Student** | `alex.student@campus.edu` | `StudentPassword123!` | CGPA profile builder (8.2), 1-click apply, ATS status tracker |
-| **Company** | `recruiter@google.com` | `CompanyPassword123!` | Post new job drives, view applicants, change status (Shortlist/Hire) |
-| **Admin** | `admin@campus.edu` | `AdminPassword123!` | Verify/Approve pending students and companies, audit drives |
