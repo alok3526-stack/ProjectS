@@ -1,0 +1,32 @@
+[
+    {
+        "user_id": "6ac6e28f4c908ccd84064584",
+        "name": "Alex Johnson",
+        "email": "alex.student@campus.edu",
+        "cgpa": 8.85,
+        "skills": "PHP 8, MongoDB, Cloud Architecture, Python, React",
+        "department": "Computer Science & AI",
+        "phone": "+1 (555) 999-8888",
+        "graduation_year": "2027",
+        "resume_link": "https://drive.google.com/sample-alex-resume-v2.pdf",
+        "bio": "Honors student focusing on scalable backend systems and distributed NoSQL databases.",
+        "updated_at": "2026-10-08 02:31:44",
+        "_id": "6ac6e28f4c908ccd84064585",
+        "created_at": "2026-10-08 02:23:43"
+    },
+    {
+        "user_id": "6ac6e28f4c908ccd84064586",
+        "name": "Samantha Miller",
+        "email": "samantha.miller@campus.edu",
+        "cgpa": 7.1,
+        "skills": "Java, Spring Boot, MySQL, REST APIs",
+        "department": "Information Technology",
+        "phone": "+1 (555) 876-5432",
+        "graduation_year": "2027",
+        "resume_link": "https://drive.google.com/sample-samantha-resume.pdf",
+        "bio": "Aspiring backend engineer focusing on scalable enterprise systems.",
+        "updated_at": "2026-10-08 02:23:43",
+        "_id": "6ac6e28f4c908ccd84064587",
+        "created_at": "2026-10-08 02:23:43"
+    }
+]

@@ -1,0 +1,309 @@
+/* Modern Design System for Campus Placement Portal */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #4f46e5;
+    --primary-hover: #4338ca;
+    --primary-soft: #eef2ff;
+    --secondary-color: #0ea5e9;
+    --success-color: #10b981;
+    --success-soft: #ecfdf5;
+    --warning-color: #f59e0b;
+    --warning-soft: #fffbeb;
+    --danger-color: #ef4444;
+    --danger-soft: #fef2f2;
+    --dark-surface: #0f172a;
+    --card-bg: #ffffff;
+    --text-primary: #1e293b;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --font-heading: 'Plus Jakarta Sans', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 22px;
+    --shadow-subtle: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.06);
+    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 12px 24px -4px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(15, 23, 42, 0.03);
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    background-color: #f8fafc;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6, .brand-font {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+}
+
+main {
+    flex: 1;
+}
+
+/* Navbar */
+.navbar-custom {
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--shadow-subtle);
+    padding: 0.8rem 0;
+}
+
+.navbar-brand {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 1.35rem;
+    color: var(--dark-surface);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.navbar-brand i {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+}
+
+.nav-link {
+    font-weight: 500;
+    color: var(--text-muted);
+    padding: 0.5rem 0.9rem !important;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--primary-color);
+    background-color: var(--primary-soft);
+}
+
+/* Custom Cards */
+.card-custom {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-custom:hover {
+    box-shadow: var(--shadow-hover);
+}
+
+.card-custom-header {
+    background: transparent;
+    border-bottom: 1px solid var(--border-color);
+    padding: 1.25rem 1.5rem;
+}
+
+/* Stat Metric Card */
+.stat-card {
+    background: #ffffff;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    transition: all 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+}
+
+.stat-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.stat-icon.primary { background-color: var(--primary-soft); color: var(--primary-color); }
+.stat-icon.success { background-color: var(--success-soft); color: var(--success-color); }
+.stat-icon.warning { background-color: var(--warning-soft); color: var(--warning-color); }
+.stat-icon.secondary { background-color: #f0f9ff; color: var(--secondary-color); }
+
+.stat-value {
+    font-size: 1.75rem;
+    font-weight: 800;
+    font-family: var(--font-heading);
+    line-height: 1.2;
+    margin-bottom: 0.15rem;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* Status Badges */
+.badge-status {
+    padding: 0.4rem 0.75rem;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.badge-status.applied {
+    background-color: #e0f2fe;
+    color: #0369a1;
+}
+
+.badge-status.shortlisted {
+    background-color: #fef3c7;
+    color: #b45309;
+}
+
+.badge-status.hired {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+.badge-status.rejected {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+.badge-status.approved, .badge-status.active {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+.badge-status.pending {
+    background-color: #fef3c7;
+    color: #b45309;
+}
+
+.badge-status.closed {
+    background-color: #f1f5f9;
+    color: #64748b;
+}
+
+/* Modern Buttons */
+.btn-primary-custom {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #ffffff;
+    font-weight: 600;
+    padding: 0.6rem 1.25rem;
+    border-radius: var(--radius-md);
+    transition: all 0.2s;
+}
+
+.btn-primary-custom:hover {
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+.btn-outline-custom {
+    border: 1.5px solid var(--border-color);
+    color: var(--text-primary);
+    font-weight: 600;
+    padding: 0.6rem 1.25rem;
+    border-radius: var(--radius-md);
+    background: #ffffff;
+}
+
+.btn-outline-custom:hover {
+    background: #f8fafc;
+    border-color: var(--text-muted);
+}
+
+/* Hero Section */
+.hero-gradient {
+    background: radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.08) 0%, rgba(248, 250, 252, 0) 90%),
+                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.08) 0%, rgba(248, 250, 252, 0) 90%);
+}
+
+/* Modern Tables */
+.table-custom {
+    margin-bottom: 0;
+}
+
+.table-custom th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    font-weight: 700;
+    background-color: #f8fafc;
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.85rem 1rem;
+}
+
+.table-custom td {
+    padding: 1rem;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+/* Form Styles */
+.form-label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #334155;
+    margin-bottom: 0.4rem;
+}
+
+.form-control, .form-select {
+    border-radius: var(--radius-md);
+    border: 1.5px solid var(--border-color);
+    padding: 0.65rem 0.9rem;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
+}
+
+/* Eligibility badge */
+.eligibility-pill {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+}
+.eligibility-pill.eligible {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+.eligibility-pill.not-eligible {
+    background-color: #fef2f2;
+    color: #b91c1c;
+}
+
+/* Footer */
+footer {
+    background: #ffffff;
+    border-top: 1px solid var(--border-color);
+    padding: 1.75rem 0;
+    margin-top: auto;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}

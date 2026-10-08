@@ -1,0 +1,67 @@
+[
+    {
+        "company_id": "6ac6e28f4c908ccd84064581",
+        "company_name": "Google Technologies",
+        "title": "Associate Software Engineer",
+        "description": "Build scalable global services, optimize latency, and collaborate with world-class engineers across Google Cloud.",
+        "min_cgpa": 7.5,
+        "ctc": "$115,000 / 22 LPA",
+        "location": "Mountain View, CA / Remote",
+        "deadline": "2026-12-15",
+        "status": "active",
+        "created_at": "2026-10-08 02:23:43",
+        "_id": "6ac6e28f4c908ccd84064588"
+    },
+    {
+        "company_id": "6ac6e28f4c908ccd84064581",
+        "company_name": "Google Technologies",
+        "title": "Frontend Web Developer",
+        "description": "Create responsive, accessible, high-performance web applications using modern JavaScript/TypeScript and web components.",
+        "min_cgpa": 6.5,
+        "ctc": "$95,000 / 16 LPA",
+        "location": "New York, NY / Hybrid",
+        "deadline": "2026-11-30",
+        "status": "active",
+        "created_at": "2026-10-08 02:23:43",
+        "_id": "6ac6e28f4c908ccd84064589"
+    },
+    {
+        "company_id": "6ac6e28f4c908ccd84064582",
+        "company_name": "Microsoft Corporation",
+        "title": "AI & Machine Learning Research Engineer",
+        "description": "Develop state-of-the-art transformer models, fine-tune LLMs, and deploy inference pipelines to Azure AI.",
+        "min_cgpa": 8.5,
+        "ctc": "$135,000 / 28 LPA",
+        "location": "Redmond, WA / Remote",
+        "deadline": "2026-12-31",
+        "status": "active",
+        "created_at": "2026-10-08 02:23:43",
+        "_id": "6ac6e28f4c908ccd8406458a"
+    },
+    {
+        "company_id": "6ac6e28f4c908ccd84064581",
+        "company_name": "Google Technologies",
+        "title": "Senior DevOps Cloud Architect",
+        "description": "Architect and scale Kubernetes infrastructure and CI/CD pipelines across global data centers.",
+        "min_cgpa": 8,
+        "ctc": "$140,000 / 30 LPA",
+        "location": "San Jose, CA / Remote",
+        "deadline": "2026-12-31",
+        "status": "active",
+        "created_at": "2026-10-08 02:31:07",
+        "_id": "6ac6e44bf58fd6eaa4057500"
+    },
+    {
+        "company_id": "6ac6e28f4c908ccd84064581",
+        "company_name": "Google Technologies",
+        "title": "Cloud FullStack Engineer",
+        "description": "Develop next-generation cloud native developer platforms and APIs.",
+        "min_cgpa": 7,
+        "ctc": "$125,000 / 25 LPA",
+        "location": "Seattle, WA / Remote",
+        "deadline": "2026-12-31",
+        "status": "active",
+        "created_at": "2026-10-08 02:31:43",
+        "_id": "6ac6e46ff58fd6eaa4057501"
+    }
+]

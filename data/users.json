@@ -1,0 +1,60 @@
+[
+    {
+        "name": "Campus Placement Dean",
+        "email": "admin@campus.edu",
+        "password": "$2y$10$6o2Y79YhMVKOzXEScM1oKe0WOdSBQXG2/M8dtfHETcwX5DgUeR4A.",
+        "role": "admin",
+        "status": "approved",
+        "created_at": "2026-10-08 02:23:43",
+        "_id": "6ac6e28f4c908ccd84064580"
+    },
+    {
+        "name": "Google Technologies",
+        "email": "recruiter@google.com",
+        "password": "$2y$10$hblAN6.n73dPGBFPEP8.YeMruuyhQZMFq1whUrGhK5PWHfYUI4NbC",
+        "role": "company",
+        "status": "approved",
+        "industry": "Cloud & AI Technology",
+        "created_at": "2026-10-08 02:23:43",
+        "_id": "6ac6e28f4c908ccd84064581"
+    },
+    {
+        "name": "Microsoft Corporation",
+        "email": "careers@microsoft.com",
+        "password": "$2y$10$Qqgh4cK0kxikTv6EfbrlnOL8Mkkn0Im7oJYtVf5j370FAz1mdQOb.",
+        "role": "company",
+        "status": "approved",
+        "industry": "Enterprise Software",
+        "created_at": "2026-10-08 02:23:43",
+        "_id": "6ac6e28f4c908ccd84064582"
+    },
+    {
+        "name": "Starlight Robotics (Pending Approval)",
+        "email": "hr@starlightrobotics.io",
+        "password": "$2y$10$nu3VvuFE4SUViIeZtnDQk.UKGXUa0TXG.m5tZIKSsgs/JCKWd8nfW",
+        "role": "company",
+        "status": "pending",
+        "industry": "Robotics & Hardware",
+        "created_at": "2026-10-08 02:23:43",
+        "_id": "6ac6e28f4c908ccd84064583"
+    },
+    {
+        "name": "Alex Johnson",
+        "email": "alex.student@campus.edu",
+        "password": "$2y$10$ym/Qn/qvgAVu1n2jOi/BG.bSqH.NuJL8AwgNmw93RS9zOefJCJgMG",
+        "role": "student",
+        "status": "approved",
+        "created_at": "2026-10-08 02:23:43",
+        "_id": "6ac6e28f4c908ccd84064584",
+        "updated_at": "2026-10-08 02:31:44"
+    },
+    {
+        "name": "Samantha Miller (Pending Verification)",
+        "email": "samantha.miller@campus.edu",
+        "password": "$2y$10$/m9kadfrKYBKmyUA/2MM/.QfhB.blAVQadRFiHUtfHx0dtm8TLDOW",
+        "role": "student",
+        "status": "pending",
+        "created_at": "2026-10-08 02:23:43",
+        "_id": "6ac6e28f4c908ccd84064586"
+    }
+]
