@@ -7,7 +7,7 @@
 // MongoDB Atlas Connection URI
 // REPLACE the placeholder below with your MongoDB Atlas connection string:
 // e.g.: mongodb+srv://myAdmin:Secret123@cluster0.abcde.mongodb.net/placement_db?retryWrites=true&w=majority
-define('MONGODB_URI', getenv('MONGODB_URI') ?: 'mongodb+srv://hydrogenperoxide010_db_user:CcxQSlkSCEClHVIR@cluster0.example.mongodb.net/placement_db?retryWrites=true&w=majority');
+define('MONGODB_URI', getenv('MONGODB_URI') ?: 'mongodb+srv://hydrogenperoxide010_db_user:CcxQSlkSCEClHVIR@cluster0@cluster0.s0nxkvo.mongodb.net/?appName=Cluster0');
 
 // MongoDB Database Name
 define('MONGODB_DB_NAME', getenv('MONGODB_DB') ?: 'placement_db');
