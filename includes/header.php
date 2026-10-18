@@ -6,6 +6,9 @@ require_once __DIR__ . '/auth.php';
 $currentUser = get_auth_user();
 $flash = get_flash_message();
 $dbStatus = get_db_status();
+
+// Set to true to show the database connection bar again
+$showDbBanner = false;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +25,7 @@ $dbStatus = get_db_status();
 </head>
 <body>
 
+<?php if ($showDbBanner): ?>
 <!-- System Connection Bar -->
 <div class="bg-dark text-white py-1 px-3 small border-bottom border-secondary">
     <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center">
@@ -41,6 +45,7 @@ $dbStatus = get_db_status();
         </div>
     </div>
 </div>
+<?php endif; ?>
 
 <?php require_once __DIR__ . '/navbar.php'; ?>
 
