@@ -72,6 +72,12 @@ if (!$mongoConnected) {
             if (!is_dir($dataDir)) {
                 @mkdir($dataDir, 0777, true);
             }
+            if (!is_writable($dataDir)) {
+                $dataDir = sys_get_temp_dir() . '/campushire_data';
+                if (!is_dir($dataDir)) {
+                    @mkdir($dataDir, 0777, true);
+                }
+            }
             $this->filePath = $dataDir . '/' . $name . '.json';
             if (!file_exists($this->filePath)) {
                 file_put_contents($this->filePath, json_encode([], JSON_PRETTY_PRINT));
