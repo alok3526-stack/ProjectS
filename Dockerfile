@@ -2,7 +2,7 @@ FROM php:8.2-apache
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends unzip git libssl-dev pkg-config \
-    && pecl install mongodb \
+    && (pecl install mongodb-1.21.0 || pecl install mongodb-1.20.1) \
     && docker-php-ext-enable mongodb \
     && rm -rf /var/lib/apt/lists/*
 
