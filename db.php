@@ -2,8 +2,7 @@
 /**
  * Database Connection Module
  * Connects to MongoDB Atlas cluster using the official MongoDB PHP Library (mongodb/mongodb)
- * Features an intelligent fallback to ensure Step 5 testing works out-of-the-box
- * even before pasting Atlas credentials.
+ * Features a fallback to a local JSON store if Atlas is unreachable.
  */
 
 require_once __DIR__ . '/config.php';
@@ -12,6 +11,116 @@ require_once __DIR__ . '/vendor/autoload.php';
 use MongoDB\Client;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
+
+/**
+ * Adapter that makes the real MongoDB collection behave exactly like the
+ * local JSON fallback: find() returns arrays, documents are plain arrays,
+ * and IDs are strings. This way every page works in both modes.
+ */
+class AtlasCollection {
+    private $col;
+
+    public function __construct($col) {
+        $this->col = $col;
+    }
+
+    /** Convert BSON types into plain PHP values */
+    private function normalize($v) {
+        if ($v instanceof \MongoDB\Model\BSONDocument || $v instanceof \MongoDB\Model\BSONArray) {
+            $v = $v->getArrayCopy();
+        }
+        if (is_array($v)) {
+            foreach ($v as $k => $x) {
+                $v[$k] = $this->normalize($x);
+            }
+            return $v;
+        }
+        if ($v instanceof ObjectId) {
+            return (string)$v;
+        }
+        if ($v instanceof UTCDateTime) {
+            return $v->toDateTime()->format('Y-m-d H:i:s');
+        }
+        return $v;
+    }
+
+    /** Match _id whether it is stored as a string or as an ObjectId */
+    private function prepFilter(array $filter): array {
+        if (array_key_exists('_id', $filter)) {
+            $v = $filter['_id'];
+            if (!is_array($v)) {
+                $s = (string)$v;
+                $ids = [$s];
+                if (preg_match('/^[a-f0-9]{24}$/i', $s)) {
+                    $ids[] = new ObjectId($s);
+                }
+                $filter['_id'] = ['$in' => $ids];
+            }
+        }
+        return $filter;
+    }
+
+    public function insertOne($document, array $options = []) {
+        $doc = (array)$document;
+        if (!isset($doc['_id'])) {
+            $doc['_id'] = (string)new ObjectId();
+        } else {
+            $doc['_id'] = (string)$doc['_id'];
+        }
+        if (!isset($doc['created_at'])) {
+            $doc['created_at'] = date('Y-m-d H:i:s');
+        }
+        $this->col->insertOne($doc, $options);
+        return new class($doc['_id']) {
+            private $insertedId;
+            public function __construct($id) { $this->insertedId = $id; }
+            public function getInsertedId() { return $this->insertedId; }
+        };
+    }
+
+    public function findOne(array $filter = [], array $options = []): ?array {
+        $doc = $this->col->findOne($this->prepFilter($filter), $options);
+        if ($doc === null) {
+            return null;
+        }
+        return $this->normalize($doc);
+    }
+
+    public function find(array $filter = [], array $options = []): array {
+        $cursor = $this->col->find($this->prepFilter($filter), $options);
+        $results = [];
+        foreach ($cursor as $doc) {
+            $results[] = $this->normalize($doc);
+        }
+        return $results;
+    }
+
+    public function updateOne(array $filter, array $update, array $options = []) {
+        $isOperator = false;
+        foreach (array_keys($update) as $k) {
+            if (is_string($k) && strlen($k) > 0 && $k[0] === '$') {
+                $isOperator = true;
+                break;
+            }
+        }
+        if (!$isOperator) {
+            $update = ['$set' => $update];
+        }
+        if (!isset($update['$set'])) {
+            $update['$set'] = [];
+        }
+        $update['$set']['updated_at'] = date('Y-m-d H:i:s');
+        return $this->col->updateOne($this->prepFilter($filter), $update, $options);
+    }
+
+    public function deleteOne(array $filter) {
+        return $this->col->deleteOne($this->prepFilter($filter));
+    }
+
+    public function countDocuments(array $filter = []): int {
+        return (int)$this->col->countDocuments($this->prepFilter($filter));
+    }
+}
 
 // Connection state flags
 $mongoConnected = false;
@@ -29,7 +138,7 @@ $dbName = MONGODB_DB_NAME;
 
 // Check if credentials are still placeholder
 $isPlaceholder = (
-    strpos($uri, '<username>') !== false || 
+    strpos($uri, '<username>') !== false ||
     strpos($uri, '<password>') !== false ||
     empty($uri)
 );
@@ -37,19 +146,21 @@ $isPlaceholder = (
 if (!$isPlaceholder) {
     try {
         // Attempt connection with Atlas cluster
-        $client = new Client($uri, [], [
-            'serverSelectionTimeoutMS' => 2500, // Fast timeout for responsive UI
+        $client = new Client($uri, [
+            'serverSelectionTimeoutMS' => 8000,
+        ], [
+            'typeMap' => ['root' => 'array', 'document' => 'array', 'array' => 'array'],
         ]);
-        
+
         // Ping database to confirm handshake
         $client->selectDatabase('admin')->command(['ping' => 1]);
-        
+
         $dbInstance = $client->selectDatabase($dbName);
-        $usersCollection = $dbInstance->selectCollection('users');
-        $profilesCollection = $dbInstance->selectCollection('profiles');
-        $jobsCollection = $dbInstance->selectCollection('jobs');
-        $applicationsCollection = $dbInstance->selectCollection('applications');
-        
+        $usersCollection = new AtlasCollection($dbInstance->selectCollection('users'));
+        $profilesCollection = new AtlasCollection($dbInstance->selectCollection('profiles'));
+        $jobsCollection = new AtlasCollection($dbInstance->selectCollection('jobs'));
+        $applicationsCollection = new AtlasCollection($dbInstance->selectCollection('applications'));
+
         $mongoConnected = true;
     } catch (\Throwable $e) {
         $mongoConnected = false;
@@ -57,8 +168,9 @@ if (!$isPlaceholder) {
     }
 }
 
-// Fallback driver to guarantee local dev testing works seamlessly
+// Fallback driver so the app still works if Atlas is unreachable
 if (!$mongoConnected) {
+
     /**
      * Local JSON-backed Mock Collection conforming to MongoDB PHP Library interface
      */
@@ -105,7 +217,6 @@ if (!$mongoConnected) {
                     if ($docId !== $valId) return false;
                     continue;
                 }
-
                 if (is_array($val) && isset($val['$lte'])) {
                     if (!isset($doc[$key]) || (float)$doc[$key] > (float)$val['$lte']) return false;
                     continue;
@@ -122,7 +233,6 @@ if (!$mongoConnected) {
                     if (isset($doc[$key]) && $doc[$key] === $val['$ne']) return false;
                     continue;
                 }
-
                 if (!array_key_exists($key, $doc) || (string)$doc[$key] !== (string)$val) {
                     return false;
                 }
@@ -143,7 +253,6 @@ if (!$mongoConnected) {
             }
             $data[] = $doc;
             $this->saveData($data);
-
             return new class($doc['_id']) {
                 private $insertedId;
                 public function __construct($id) { $this->insertedId = $id; }
@@ -169,7 +278,6 @@ if (!$mongoConnected) {
                     $results[] = $doc;
                 }
             }
-
             // Handle sort option
             if (isset($options['sort']) && is_array($options['sort'])) {
                 foreach ($options['sort'] as $field => $dir) {
@@ -185,12 +293,10 @@ if (!$mongoConnected) {
                     break;
                 }
             }
-
             // Handle limit option
             if (isset($options['limit']) && is_numeric($options['limit'])) {
                 $results = array_slice($results, 0, (int)$options['limit']);
             }
-
             return $results;
         }
 
@@ -216,7 +322,6 @@ if (!$mongoConnected) {
             if ($modifiedCount > 0) {
                 $this->saveData($data);
             }
-
             return new class($modifiedCount) {
                 private $matchedCount;
                 public function __construct($c) { $this->matchedCount = $c; }
@@ -238,7 +343,6 @@ if (!$mongoConnected) {
             if ($deletedCount > 0) {
                 $this->saveData($data);
             }
-
             return new class($deletedCount) {
                 private $deletedCount;
                 public function __construct($c) { $this->deletedCount = $c; }
